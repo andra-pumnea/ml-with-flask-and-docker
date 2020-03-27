@@ -2,14 +2,13 @@ from flask import Flask, render_template, url_for, request
 import tensorflow as tf
 import pickle
 import numpy as np
-from tensorflow.keras import backend
 from tensorflow.keras.models import model_from_json
 from sklearn.feature_extraction.text import TfidfVectorizer
 import sys, os
 
 app = Flask(__name__)
 
-global model, loaded_vec, tokenizer, transformer
+global model, loaded_vec
 
 
 def load_model():
@@ -30,7 +29,6 @@ def preprocess_text(data):
     tfidf =  loaded_vec.transform([data])
     return tfidf.toarray()
 
-
 model = load_model()
 loaded_vec = pickle.load(open("model/feature.pkl", "rb"))
 
@@ -44,7 +42,7 @@ def predict():
     if request.method == 'POST':
         text = request.form['message']
         x = preprocess_text(text)
-        
+#         with graph.as_default():
         out = model.predict(x)
         print(out)
         print(np.argmax(out, axis=1))

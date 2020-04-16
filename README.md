@@ -6,7 +6,7 @@ This is a simple feed-forward network built with keras, that uses tf-idf to enco
 To run the docker image you need to clone the repo and then:
 
 ```
-cd hatespeech-deploy
+cd ml-with-flask-and-docker
 docker build --tag flask-app:1.0 .
 docker run --publish 5000:5000 --detach --name app flask-app:1.0
 docker start app
